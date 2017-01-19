@@ -1,0 +1,12 @@
+# == Class: <%= metadata.name %>::install
+#
+# This is a private class meant to be called from <%= metadata.name %>
+# This class installs the <%= metadata.name %> package.
+#
+class <%= metadata.name %>::install {
+
+  package { $<%= metadata.name %>::package_name:
+    ensure => $<%= metadata.name %>::version,
+  }
+
+}

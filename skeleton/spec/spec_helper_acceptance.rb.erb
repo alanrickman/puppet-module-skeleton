@@ -1,0 +1,28 @@
+require 'beaker-rspec'
+require 'pry'
+require 'simp/beaker_helpers'
+
+include Simp::BeakerHelpers
+
+step "Install Puppet on each host"
+install_puppet_agent_on( hosts, { :puppet_collection => 'pc1' } )
+
+RSpec.configure do |c|
+  # Find the module directory
+  module_root = File.expand_path( File.join( File.dirname(__FILE__), '..') )
+
+  # Enable test descriptions
+  c.formatter = :documentation
+
+  # Configure all nodes in nodeset
+  c.before :suite do
+    # Install module and dependencies
+    puppet_module_install(
+      :source      => module_root,
+      :module_name => '<%= metadata.name %>',
+    )
+    hosts.each do |host|
+      # Install fixture modules
+      copy_fixture_modules_to( hosts, { :target_module_dir => module_root, })
+  end
+end

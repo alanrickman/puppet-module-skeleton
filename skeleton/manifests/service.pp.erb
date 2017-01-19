@@ -1,0 +1,15 @@
+# == Class: <%= metadata.name %>::service
+#
+# This is a private class meant to be called from <%= metadata.name %>
+# This class starts and enables the <%= metadata.name %> service.
+#
+class <%= metadata.name %>::service {
+
+  require ::<%= metadata.name %>::config
+
+  service { $<%= metadata.name %>::service_name:
+    ensure => running,
+    enable => true,
+  }
+
+}
